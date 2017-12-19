@@ -25,7 +25,7 @@ def post(event, context):
     }
 
     # write the todo to the database
-    table.put_item(Item=tokenItem)
+    tokenTable.put_item(Item=tokenItem)
 
     response = {
         "statusCode": 200,
