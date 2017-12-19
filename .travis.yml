@@ -7,7 +7,7 @@ deploy:
 - provider: lambda
   function_name: postToken
   region: us-east-1
-  role: arn:aws:iam::225764164460:role/travis-ci-role
+  role: arn:aws:iam::225764164460:role/lambda_dynamo 
   runtime: python3.6
   handler_name: post
   module_name: token.post_handler
@@ -17,7 +17,7 @@ deploy:
 - provider: lambda
   function_name: postKeystore
   region: us-east-1
-  role: arn:aws:iam::225764164460:role/travis-ci-role
+  role: arn:aws:iam::225764164460:role/lambda_dynamo 
   runtime: python3.6
   handler_name: post
   module_name: keystore.post_handler
@@ -27,7 +27,7 @@ deploy:
 - provider: lambda
   function_name: getKeystore
   region: us-east-1
-  role: arn:aws:iam::225764164460:role/travis-ci-role
+  role: arn:aws:iam::225764164460:role/lambda_dynamo 
   runtime: python3.6
   handler_name: get
   module_name: keystore.get_handler
@@ -37,7 +37,7 @@ deploy:
 - provider: lambda
   function_name: deleteToken
   region: us-east-1
-  role: arn:aws:iam::225764164460:role/travis-ci-role
+  role: arn:aws:iam::225764164460:role/lambda_dynamo 
   runtime: python3.6
   handler_name: delete
   module_name: keystore.delete_handler
