@@ -9,7 +9,7 @@ deploy:
   region: us-east-1
   role: arn:aws:iam::225764164460:role/travis-ci-role
   runtime: python3.6
-  handler_name: get
+  handler_name: post
   module_name: keystore.post_handler
   access_key_id: AKIAJOFLZ7BXIFJG34NA
   secret_access_key:
