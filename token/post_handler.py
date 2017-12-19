@@ -19,9 +19,9 @@ def post(event, context):
     tokenItem = {
         'id': str(uuid.uuid1()),
         'ipHash': ipHash,
-        'ipHash_salt': "",
+        'ipHash_salt': "foo",
         'userAgentHash': userAgentHash,
-        'userAgentHash_salt' : ""
+        'userAgentHash_salt' : "foo"
     }
 
     # write the todo to the database
