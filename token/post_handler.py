@@ -8,10 +8,10 @@ def post(event, context):
     # Gather what we need about the client.
     # Never store ip or user agent in the clear to preserve my users' privacy
     # TODO: salt these!
-    ip = event.get('requestContext').get('identity').get('sourceIp')
+    ip = event.get('requestContext').get('identity').get('sourceIp').encode('utf-8')
     ipHash = hashlib.sha224(ip).hexdigest()
     
-    userAgent = event.get('requestContext').get('identity').get('userAgent')
+    userAgent = event.get('requestContext').get('identity').get('userAgent').encode('utf-8')
     userAgentHash = hashlib.sha224(userAgent).hexdigest()
 
     tokenTable = dynamodb.Table('token')
