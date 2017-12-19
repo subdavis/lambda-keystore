@@ -15,7 +15,7 @@ def get(event, context):
 
     response = {
         "statusCode": 200,
-        "body": json.dumps(item)
+        "body": "Iguess"
     }
 
     return response
