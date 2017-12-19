@@ -1,0 +1,115 @@
+swagger: "2.0"
+info:
+  description: "AWS Lambda Dynamo Keystore"
+  version: "1.0.0"
+  title: "Lambda-Keystore"
+  termsOfService: "https://subdavis.com/Tusk"
+  contact:
+    email: "contact@subdavis.com"
+  license:
+    name: "MIT"
+host: "api.subdavis.com"
+basePath: "/v1"
+tags:
+- name: "Token"
+  description: "Create a new token"
+- name: "Keystore"
+  description: "Create and manage keys"
+schemes:
+- "https"
+paths:
+  /token:
+    post:
+      tags:
+      - "Token"
+      summary: "Create a new token"
+      description: ""
+      produces:
+      - "application/json"
+      responses:
+        400:
+          description: "Invalid input"
+        201:
+          description: "Token Created"
+  /keystore:
+    post:
+      tags:
+      - "Keystore"
+      summary: "Create a key/value pair"
+      description: ""
+      produces: 
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Key value pair"
+        required: true
+        schema:
+          $ref: "#/definitions/Pair"
+      responses:
+        201:
+          description: "Keypair Created"
+  /keystore/{key}:
+    get:
+      tags: 
+      - "Keystore"
+      parameters:
+      - name: "key"
+        in: "path"
+        description: "key name"
+        required: true
+        type: "string"
+      produces: 
+      - "application/json"
+      description: ""
+      summary: "fetch a key/value pair"
+      responses:
+        400:
+          description: "Invalid input"
+        200:
+          description: "Token Created"
+          schema:
+            $ref: "#/definitions/Pair"
+    delete:
+      tags: 
+      - "Keystore"
+      parameters:
+      - name: "key"
+        in: "path"
+        description: "key name"
+        required: true
+        type: "string"
+      description: ""
+      summary: "remove a key/value pair"
+      responses:
+        200:
+          description: "Token Deleted"
+definitions:
+  Pair:
+    type: "object"
+    required:
+    - "id"
+    - "key"
+    - "value"
+    - "ttl"
+    properties:
+      id:
+        type: "string"
+        format: "uuid"
+        description: uuid
+      key:
+        type: "string"
+        example: "foo"
+        description: example
+      value:
+        type: "string"
+        example: "bar"
+        description: example
+      ttl:
+        type: "integer"
+        description: example
+    xml:
+      name: "Pair"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

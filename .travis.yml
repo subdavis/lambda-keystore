@@ -10,7 +10,37 @@ deploy:
   role: arn:aws:iam::225764164460:role/travis-ci-role
   runtime: python3.6
   handler_name: post
+  module_name: token.post_handler
+  access_key_id: AKIAJOFLZ7BXIFJG34NA
+  secret_access_key:
+    secure: IFQP8kgzTGB+Bkfk1OSmVMTarWLAW+f6kvAZIPL6ShoW0GUz1ms+B2L+evduZjUIhRiDdEeAJndrbGu86hayibpPc9kfnITnw7qJgLD9ul0bRo3wE4PP9/BlGvRMHSDh6VXUniK9QmUtD/WUZ3gXptu2IinsZP/YaS6VZTmqCFSjYhdc+GYfPTccZo/0CBpzv5hpORbYoNh7YI80/Eo681insVy+vLTCEqeJ0dj3QXvE+rXrapAW79LxrmTl5lgLOGn+/U04zaPDAX6kBz7RV/SBQHE58fezAZB5lbOHvU/HX5w3Ia0+0x/Xl0zLTreBr24CSUKat20+vJS7UrXM2j9joUMNpHbjmcp1fYIvXnqOResPshSSsN+g61QKr8vBwEOiIUdH9kVSF+d61MoXTIRTg8/W8Bvya4fMfIzlbobD7xkd5YgTUpwKXOrnxSPzWlxBqDCq2Q0cAykJzl6Y8LpjHZ+GAf2nI2IixQCZmaMIUEpDx5JCGXKDbrYvuT3/q5gOZ/cqRT3QD3rr/NmI4h1LAN0jaSg7IE37NqzufbhEEt9c9jJkHvmw7R6TYo1vneOYjvlljf8O3qKUkd3IxV+lQZklL0HTh28mQfYOZsXIboeu21gBRB60uIY3keaG/5J0H4xS38JmFG2b4O/sA9E+tO/7gqdQecu53+tpXn8=
+- provider: lambda
+  function_name: postKeystore
+  region: us-east-1
+  role: arn:aws:iam::225764164460:role/travis-ci-role
+  runtime: python3.6
+  handler_name: post
   module_name: keystore.post_handler
+  access_key_id: AKIAJOFLZ7BXIFJG34NA
+  secret_access_key:
+    secure: IFQP8kgzTGB+Bkfk1OSmVMTarWLAW+f6kvAZIPL6ShoW0GUz1ms+B2L+evduZjUIhRiDdEeAJndrbGu86hayibpPc9kfnITnw7qJgLD9ul0bRo3wE4PP9/BlGvRMHSDh6VXUniK9QmUtD/WUZ3gXptu2IinsZP/YaS6VZTmqCFSjYhdc+GYfPTccZo/0CBpzv5hpORbYoNh7YI80/Eo681insVy+vLTCEqeJ0dj3QXvE+rXrapAW79LxrmTl5lgLOGn+/U04zaPDAX6kBz7RV/SBQHE58fezAZB5lbOHvU/HX5w3Ia0+0x/Xl0zLTreBr24CSUKat20+vJS7UrXM2j9joUMNpHbjmcp1fYIvXnqOResPshSSsN+g61QKr8vBwEOiIUdH9kVSF+d61MoXTIRTg8/W8Bvya4fMfIzlbobD7xkd5YgTUpwKXOrnxSPzWlxBqDCq2Q0cAykJzl6Y8LpjHZ+GAf2nI2IixQCZmaMIUEpDx5JCGXKDbrYvuT3/q5gOZ/cqRT3QD3rr/NmI4h1LAN0jaSg7IE37NqzufbhEEt9c9jJkHvmw7R6TYo1vneOYjvlljf8O3qKUkd3IxV+lQZklL0HTh28mQfYOZsXIboeu21gBRB60uIY3keaG/5J0H4xS38JmFG2b4O/sA9E+tO/7gqdQecu53+tpXn8=
+- provider: lambda
+  function_name: getKeystore
+  region: us-east-1
+  role: arn:aws:iam::225764164460:role/travis-ci-role
+  runtime: python3.6
+  handler_name: get
+  module_name: keystore.get_handler
+  access_key_id: AKIAJOFLZ7BXIFJG34NA
+  secret_access_key:
+    secure: IFQP8kgzTGB+Bkfk1OSmVMTarWLAW+f6kvAZIPL6ShoW0GUz1ms+B2L+evduZjUIhRiDdEeAJndrbGu86hayibpPc9kfnITnw7qJgLD9ul0bRo3wE4PP9/BlGvRMHSDh6VXUniK9QmUtD/WUZ3gXptu2IinsZP/YaS6VZTmqCFSjYhdc+GYfPTccZo/0CBpzv5hpORbYoNh7YI80/Eo681insVy+vLTCEqeJ0dj3QXvE+rXrapAW79LxrmTl5lgLOGn+/U04zaPDAX6kBz7RV/SBQHE58fezAZB5lbOHvU/HX5w3Ia0+0x/Xl0zLTreBr24CSUKat20+vJS7UrXM2j9joUMNpHbjmcp1fYIvXnqOResPshSSsN+g61QKr8vBwEOiIUdH9kVSF+d61MoXTIRTg8/W8Bvya4fMfIzlbobD7xkd5YgTUpwKXOrnxSPzWlxBqDCq2Q0cAykJzl6Y8LpjHZ+GAf2nI2IixQCZmaMIUEpDx5JCGXKDbrYvuT3/q5gOZ/cqRT3QD3rr/NmI4h1LAN0jaSg7IE37NqzufbhEEt9c9jJkHvmw7R6TYo1vneOYjvlljf8O3qKUkd3IxV+lQZklL0HTh28mQfYOZsXIboeu21gBRB60uIY3keaG/5J0H4xS38JmFG2b4O/sA9E+tO/7gqdQecu53+tpXn8=
+- provider: lambda
+  function_name: deleteToken
+  region: us-east-1
+  role: arn:aws:iam::225764164460:role/travis-ci-role
+  runtime: python3.6
+  handler_name: delete
+  module_name: keystore.delete_handler
   access_key_id: AKIAJOFLZ7BXIFJG34NA
   secret_access_key:
     secure: IFQP8kgzTGB+Bkfk1OSmVMTarWLAW+f6kvAZIPL6ShoW0GUz1ms+B2L+evduZjUIhRiDdEeAJndrbGu86hayibpPc9kfnITnw7qJgLD9ul0bRo3wE4PP9/BlGvRMHSDh6VXUniK9QmUtD/WUZ3gXptu2IinsZP/YaS6VZTmqCFSjYhdc+GYfPTccZo/0CBpzv5hpORbYoNh7YI80/Eo681insVy+vLTCEqeJ0dj3QXvE+rXrapAW79LxrmTl5lgLOGn+/U04zaPDAX6kBz7RV/SBQHE58fezAZB5lbOHvU/HX5w3Ia0+0x/Xl0zLTreBr24CSUKat20+vJS7UrXM2j9joUMNpHbjmcp1fYIvXnqOResPshSSsN+g61QKr8vBwEOiIUdH9kVSF+d61MoXTIRTg8/W8Bvya4fMfIzlbobD7xkd5YgTUpwKXOrnxSPzWlxBqDCq2Q0cAykJzl6Y8LpjHZ+GAf2nI2IixQCZmaMIUEpDx5JCGXKDbrYvuT3/q5gOZ/cqRT3QD3rr/NmI4h1LAN0jaSg7IE37NqzufbhEEt9c9jJkHvmw7R6TYo1vneOYjvlljf8O3qKUkd3IxV+lQZklL0HTh28mQfYOZsXIboeu21gBRB60uIY3keaG/5J0H4xS38JmFG2b4O/sA9E+tO/7gqdQecu53+tpXn8=
