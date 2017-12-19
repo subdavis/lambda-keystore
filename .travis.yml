@@ -7,7 +7,7 @@ deploy:
 - provider: lambda
   function_name: postToken
   region: us-east-1
-  role: arn:aws:iam::225764164460:user/travis-ci 
+  role: arn:aws:iam::225764164460:role/travis-ci-role
   runtime: python3.6
   handler_name: get
   module_name: keystore.post_handler
