@@ -29,9 +29,9 @@ def post(event, context):
 
     response = {
         "statusCode": 200,
-        "body": {
-            'id': tokenItem.get('id'),
-        }
+        "body": str({
+            'id': tokenItem.get('id')
+        })
     }
 
     return response
