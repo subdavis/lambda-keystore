@@ -28,6 +28,7 @@ def post(event, context):
     else:
         body = json.loads(event.get('body'))
         item = {
+            'id': str(uuid.uuid1()),
             'key': body.get('key'),
             'value': body.get('value'),
             'owner': owner_token,
