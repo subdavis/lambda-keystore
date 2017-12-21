@@ -11,7 +11,7 @@ class mockTable:
         print("Items are now: " + str(self.items))
 
     def query(self, **kwargs):
-        return 'foobar'
+        return {'Items': [{}]}
 
 class mockDynamo:
     def Table(self, token):

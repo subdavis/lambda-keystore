@@ -20,7 +20,7 @@ def post(event, context):
     query_result = tokenTable.query(KeyConditionExpression=Key('id').eq(owner_token))
     
     response = None
-    if (query_result != owner_token):
+    if (len(query_result.get('Items', [])) != 1):
         response = {
             "statusCode": 401, 
             "body": str({"error": "token not found"})
