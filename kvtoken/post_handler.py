@@ -2,7 +2,7 @@ import boto3
 import hashlib
 import uuid
 
-dynamodb = boto3.resource('dynamodb')
+dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 
 def post(event, context):
     # Gather what we need about the client.
@@ -25,7 +25,7 @@ def post(event, context):
     }
 
     # write the todo to the database
-    tokenTable.put_item(Item=tokenItem)
+    tokenTable.put_item(Item=tokenItem,ReturnValues='NONE')
 
     response = {
         "statusCode": 200,

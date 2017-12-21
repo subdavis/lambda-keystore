@@ -1,6 +1,6 @@
 import boto3
 import uuid
-dynamodb = boto3.resource('dynamodb')
+dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 
 def delete(event, context):
     table = dynamodb.Table('keystore')

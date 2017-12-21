@@ -1,21 +1,43 @@
 import boto3
+from boto3.dynamodb.conditions import Key
+import json
 import uuid
-dynamodb = boto3.resource('dynamodb')
+
+dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 
 def post(event, context):
-    table = dynamodb.Table('keystore')
 
-    item = {
-        'id': str(uuid.uuid1()),
-        'foo': 'bar'
-    }
+    owner_token = event.get('headers').get('Authorization', -1)
+    if owner_token == -1:
+        return {
+            "statusCode": 401,
+            "body": "Unauthorized"
+        }
+    else:
+        owner_token = owner_token.split(' ')[-1] # Last word in the string
 
-    # write the todo to the database
-    table.put_item(Item=item)
+    tokenTable = dynamodb.Table('token')
+    query_result = tokenTable.query(KeyConditionExpression=Key('id').eq(owner_token))
+    
+    response = None
+    if (len(query_result) != 1):
+        response = {"error": "token not found"}
+    else:
+        body = json.loads(event.get('body'))
+        item = {
+            'key': body.get('key'),
+            'value': body.get('value'),
+            'owner': owner_token,
+            'ttl': body.get('ttl')
+        }
 
-    response = {
-        "statusCode": 200,
-        "body": "Iguess"
-    }
+        # write the todo to the database
+        keystoreTable = dynamodb.Table('keystore')
+        keystoreTable.put_item(Item=item)
+
+        response = {
+            "statusCode": 200,
+            "body": "Iguess"
+        }
 
     return response

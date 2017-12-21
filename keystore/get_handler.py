@@ -1,9 +1,11 @@
 import boto3
 import uuid
-dynamodb = boto3.resource('dynamodb')
+import json
+dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 
 def get(event, context):
-    table = dynamodb.Table('keystore')
+    key = event.get('pathParameters')
+    keystoreTable = dynamodb.Table('keystore')
 
     item = {
         'id': str(uuid.uuid1()),
