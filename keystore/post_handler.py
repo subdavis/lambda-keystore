@@ -21,7 +21,10 @@ def post(event, context):
     
     response = None
     if (len(query_result) != 1):
-        response = {"error": "token not found"}
+        response = str({
+            "statusCode": 401, 
+            "error": "token not found"
+        })
     else:
         body = json.loads(event.get('body'))
         item = {
@@ -36,8 +39,8 @@ def post(event, context):
         keystoreTable.put_item(Item=item)
 
         response = {
-            "statusCode": 200,
-            "body": "Iguess"
+            "statusCode": 201,
+            "body": str(item)
         }
 
     return response
