@@ -28,7 +28,7 @@ def post(event, context):
     tokenTable.put_item(Item=tokenItem,ReturnValues='NONE')
 
     response = {
-        "statusCode": 200,
+        "statusCode": 201,
         "body": str({
             'id': tokenItem.get('id')
         })

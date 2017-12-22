@@ -1,21 +1,42 @@
 import boto3
+from boto3.dynamodb.conditions import Key
+from botocore.exceptions import ClientError
 import uuid
+import json
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 
 def delete(event, context):
-    table = dynamodb.Table('keystore')
+    owner_token = event.get('headers').get('Authorization', -1)
+    if owner_token == -1:
+        return {
+            "statusCode": 401,
+            "body": str({"error": "Unauthorized"})
+        }
+    else:
+        owner_token = owner_token.split(' ')[-1] # Last word in the string
 
-    item = {
-        'id': str(uuid.uuid1()),
-        'foo': 'bar'
-    }
+    tokenTable = dynamodb.Table('token')
+    query_result = tokenTable.query(KeyConditionExpression=Key('id').eq(owner_token))
 
-    # write the todo to the database
-    table.put_item(Item=item)
+    if (len(query_result.get('Items', [])) != 1):
+        return {
+            "statusCode": 401, 
+            "body": str({"error": "Unauthorized"})
+        }
 
-    response = {
-        "statusCode": 200,
-        "body": "Iguess"
-    }
-
-    return response
+    key = event.get('pathParameters').get('key')
+    keyStoreTable = dynamodb.Table('keystore')
+    
+    try:
+        query_result = keyStoreTable.delete_item(Key={'key': key})
+    except ClientError as e:
+        return {
+            'statusCode': 500,
+            "body": str({'error':'unknown'})
+        }
+    else:
+        print("DeleteItem succeeded:")
+        return {
+            "statusCode": 200,
+            "body": str({"key": key})
+        }
