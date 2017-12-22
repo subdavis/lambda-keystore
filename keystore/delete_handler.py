@@ -28,7 +28,10 @@ def delete(event, context):
     keyStoreTable = dynamodb.Table('keystore')
     
     try:
-        query_result = keyStoreTable.delete_item(Key={'key': key})
+        query_result = keyStoreTable.delete_item(Key={
+            'owner': owner_token,
+            'key': key
+        })
     except ClientError as e:
         return {
             'statusCode': 500,

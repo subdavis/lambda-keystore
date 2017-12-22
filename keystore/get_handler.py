@@ -26,7 +26,7 @@ def get(event, context):
     key = event.get('pathParameters').get('key')
 
     keyStoreTable = dynamodb.Table('keystore')
-    query_result = keyStoreTable.query(KeyConditionExpression=Key('key').eq(key))
+    query_result = keyStoreTable.query(KeyConditionExpression=Key('owner').eq(owner_token) & Key('key').eq(key))
     items = query_result.get('Items', [])
 
     if (len(items) >= 1):
