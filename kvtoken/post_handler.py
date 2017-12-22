@@ -1,6 +1,7 @@
 import boto3
 import hashlib
 import uuid
+import json
 
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 
@@ -29,7 +30,7 @@ def post(event, context):
 
     response = {
         "statusCode": 201,
-        "body": str({
+        "body": json.dumps({
             'id': tokenItem.get('id')
         })
     }

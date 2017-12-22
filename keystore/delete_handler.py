@@ -10,7 +10,7 @@ def delete(event, context):
     if owner_token == -1:
         return {
             "statusCode": 401,
-            "body": str({"error": "Unauthorized"})
+            "body": json.dumps({"error": "Unauthorized"})
         }
     else:
         owner_token = owner_token.split(' ')[-1] # Last word in the string
@@ -21,7 +21,7 @@ def delete(event, context):
     if (len(query_result.get('Items', [])) != 1):
         return {
             "statusCode": 401, 
-            "body": str({"error": "Unauthorized"})
+            "body": json.dumps({"error": "Unauthorized"})
         }
 
     key = event.get('pathParameters').get('key')
@@ -32,11 +32,11 @@ def delete(event, context):
     except ClientError as e:
         return {
             'statusCode': 500,
-            "body": str({'error':'unknown'})
+            "body": json.dumps({'error':'unknown'})
         }
     else:
         print("DeleteItem succeeded:")
         return {
             "statusCode": 200,
-            "body": str({"key": key})
+            "body": json.dumps({"key": key})
         }

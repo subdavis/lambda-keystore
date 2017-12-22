@@ -20,7 +20,7 @@ def get(event, context):
     if (len(query_result.get('Items', [])) != 1):
         return {
             "statusCode": 401, 
-            "body": str({"error": "Unauthorized"})
+            "body": json.dumps({"error": "Unauthorized"})
         }
 
     key = event.get('pathParameters').get('key')
@@ -32,10 +32,10 @@ def get(event, context):
     if (len(items) >= 1):
         return {
             "statusCode": 200,
-            "body": str(items[0])
+            "body": json.dumps(items[0])
         }
     else:
         return {
             "statusCode": 404,
-            "body": str({"error": key + " not found"})
+            "body": json.dumps({"error": key + " not found"})
         }

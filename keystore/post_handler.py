@@ -23,7 +23,7 @@ def post(event, context):
     if (len(query_result.get('Items', [])) != 1):
         response = {
             "statusCode": 401, 
-            "body": str({"error": "token not found"})
+            "body": json.dumps({"error": "token not found"})
         }
     else:
         body = json.loads(event.get('body'))
@@ -41,7 +41,7 @@ def post(event, context):
 
         response = {
             "statusCode": 201,
-            "body": str(item)
+            "body": json.dumps(item)
         }
 
     return response
