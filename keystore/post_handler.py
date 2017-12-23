@@ -30,9 +30,9 @@ def post(event, context):
     body = json.loads(event.get('body'))
 
     def verify():
-        if type(body.get('key')) is not unicode:
+        if type(body.get('key')) is not str:
             return False
-        if type(body.get('value')) is not unicode:
+        if type(body.get('value')) is not str:
             return False
         if type(body.get('ttl')) is not int:
             return False
