@@ -2,6 +2,7 @@ import boto3
 from boto3.dynamodb.conditions import Key
 import json
 import uuid
+import time
 
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 
@@ -19,29 +20,45 @@ def post(event, context):
     tokenTable = dynamodb.Table('token')
     query_result = tokenTable.query(KeyConditionExpression=Key('id').eq(owner_token))
     
-    response = None
+
     if (len(query_result.get('Items', [])) != 1):
-        response = {
+        return {
             "statusCode": 401, 
             "body": json.dumps({"error": "token not found"})
         }
-    else:
-        body = json.loads(event.get('body'))
-        item = {
-            'id': str(uuid.uuid1()),
-            'key': body.get('key'),
-            'value': body.get('value'),
-            'owner': owner_token,
-            'ttl': body.get('ttl')
+
+    body = json.loads(event.get('body'))
+
+    def verify():
+        if type(body.get('key')) is not unicode:
+            return False
+        if type(body.get('value')) is not unicode:
+            return False
+        if type(body.get('ttl')) is not int:
+            return False
+        return True
+
+    if verify() == False:
+        return {
+            "statusCode": 400,
+            "body": json.dumps({"error":"bad body payload"})
         }
 
-        # write the todo to the database
-        keystoreTable = dynamodb.Table('keystore')
-        keystoreTable.put_item(Item=item)
+    item = {
+        'id': str(uuid.uuid1()),
+        'key': body.get('key'),
+        'value': body.get('value'),
+        'owner': owner_token,
+        'ttl': body.get('ttl')
+    }
 
-        response = {
-            "statusCode": 201,
-            "body": json.dumps(item)
-        }
+    # write the todo to the database
+    keystoreTable = dynamodb.Table('keystore')
+    keystoreTable.put_item(Item=item)
+
+    response = {
+        "statusCode": 201,
+        "body": json.dumps(item)
+    }
 
     return response

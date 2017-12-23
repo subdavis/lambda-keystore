@@ -1,4 +1,3 @@
-import boto3
 from kvtoken import post_handler as kvtoken_post_handler
 from keystore import post_handler as keystore_post_handler
 from keystore import get_handler as keystore_get_handler
@@ -10,7 +9,7 @@ class mockTable:
 
     def put_item(self, **kwargs):
         self.items.append(kwargs['Item'])
-        print("Items are now: " + str(self.items))
+        print("Item put: " + str(self.items))
 
     def delete_item(self, **kwargs):
         print("Deleting item")
@@ -25,38 +24,48 @@ class mockDynamo:
 
 def test_kvtoken_post():
     kvtoken_post_handler.dynamodb = mockDynamo()
-    return kvtoken_post_handler.post({ "requestContext": { "identity": {
+    a = kvtoken_post_handler.post({ "requestContext": { "identity": {
         "sourceIp": "1.2.3.4",
         "userAgent": "Foobar"
         }}},{})
+    assert a['statusCode'] == 201
 
 def test_keystore_post():
     keystore_post_handler.dynamodb = mockDynamo()
-    return keystore_post_handler.post({
+    a = keystore_post_handler.post({
         'body':'{"ttl": "IDK", "key": "foo", "value": "bar"}',
         'headers':{
             'Authorization': "Bearer: foobar"
         }}, {})
+    assert a['statusCode'] == 400
+    b = keystore_post_handler.post({
+        'body':'{"ttl": 123456789, "key": "foo", "value": "bar"}',
+        'headers':{
+            'Authorization': "Bearer: foobar"
+        }}, {})
+    assert b['statusCode'] == 201
 
 def test_keystore_get():
     keystore_get_handler.dynamodb = mockDynamo()
-    return keystore_get_handler.get({
+    a = keystore_get_handler.get({
         'pathParameters': { 'key':'foo'},
         'headers':{
             'Authorization': "Bearer: foobar"
         }}, {})
+    assert a['statusCode'] == 200
 
 def test_keystore_delete():
     keystore_delete_handler.dynamodb = mockDynamo()
-    return keystore_delete_handler.delete({
+    a = keystore_delete_handler.delete({
         'pathParameters': { 'key':'foo'},
         'headers':{
             'Authorization': "Bearer: foobar"
         }},{})
+    assert a['statusCode'] == 200
 
 if __name__ == "__main__":
 
-    print(test_kvtoken_post())
-    print(test_keystore_post())
-    print(test_keystore_get())
-    print(test_keystore_delete())
+    test_kvtoken_post()
+    test_keystore_post()
+    test_keystore_get()
+    test_keystore_delete()

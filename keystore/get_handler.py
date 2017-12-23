@@ -2,6 +2,7 @@ import boto3
 from boto3.dynamodb.conditions import Key
 import uuid
 import json
+import time
 dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
 
 def get(event, context):
