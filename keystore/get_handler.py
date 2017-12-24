@@ -31,12 +31,24 @@ def get(event, context):
     items = query_result.get('Items', [])
 
     if (len(items) >= 1):
+
+        item = items[0]
+        now = int(time.time()) # Seconds
+        order_of_magnitude = now / item['ttl']
+
+        if (int(order_of_magnitude) in range(0, 10) and item['ttl'] > now):
+            
+            return {
+                "statusCode": 200,
+                "body": json.dumps(item)
+            }
+
         return {
-            "statusCode": 200,
-            "body": json.dumps(items[0])
+            "statusCode": 410,
+            "body": json.dumps({"error": key + " expired"})
         }
-    else:
-        return {
-            "statusCode": 404,
-            "body": json.dumps({"error": key + " not found"})
-        }
+
+    return {
+        "statusCode": 404,
+        "body": json.dumps({"error": key + " not found"})
+    }

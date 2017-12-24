@@ -36,6 +36,10 @@ def post(event, context):
             return False
         if type(body.get('ttl')) is not int:
             return False
+        now = int(time.time()) # Seconds
+        order_of_magnitude = now / body.get('ttl') # assert now > ttl
+        if not int(order_of_magnitude) in range(1, 10):
+            return False
         return True
 
     if verify() == False:
