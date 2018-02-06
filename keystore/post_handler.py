@@ -30,18 +30,18 @@ def post(event, context):
     body = json.loads(event.get('body'))
 
     def verify():
-        if type(body.get('key')) is not str:
+        if type(body.get('key')) not in [str, unicode]:
             return False
-        if type(body.get('value')) is not str:
+        if type(body.get('value')) not in [str, unicode]:
             return False
         if type(body.get('ttl')) is not int:
             return False
         now = int(time.time()) # Seconds
-        order_of_magnitude = now / body.get('ttl') # assert now > ttl
-        if not int(order_of_magnitude) in range(1, 10):
+        order_of_magnitude = body.get('ttl') / now # assert ttl > now
+        if not int(order_of_magnitude) in range(1, 9):
             return False
         return True
-
+    
     if verify() == False:
         return {
             "statusCode": 400,

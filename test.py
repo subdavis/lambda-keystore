@@ -20,7 +20,7 @@ class mockTable:
         return {'Items': [{
             "key":"foo", 
             "value": "bar", 
-            "ttl": self.expiry }]} # Hasn't expired...
+            "ttl": self.expiry }]}
 
 class mockDynamo:
     def __init__(self, expiry):
@@ -51,21 +51,22 @@ def test_keystore_post():
         }}, {})
     assert b['statusCode'] == 400
     c = keystore_post_handler.post({
-        'body':'{"ttl": 1514137283, "key": "foo", "value": "bar"}',
+        'body':'{"ttl": 9999999999, "key": "foo", "value": "bar"}',
         'headers':{
             'Authorization': "Bearer: foobar"
         }}, {})
     assert c['statusCode'] == 201
 
 def test_keystore_get():
-    keystore_get_handler.dynamodb = mockDynamo(time.time() + 1) # expires in the future
+    now = time.time()
+    keystore_get_handler.dynamodb = mockDynamo(now + 100) # expires in the future
     a = keystore_get_handler.get({
         'pathParameters': { 'key':'foo'},
         'headers':{
             'Authorization': "Bearer: foobar"
         }}, {})
     assert a['statusCode'] == 200
-    keystore_get_handler.dynamodb = mockDynamo(time.time() - 1) # expires in the past
+    keystore_get_handler.dynamodb = mockDynamo(now - 100) # expires in the past
     b = keystore_get_handler.get({
         'pathParameters': { 'key':'foo'},
         'headers':{
