@@ -40,7 +40,7 @@ def get(event, context):
             
             return {
                 "statusCode": 200,
-                "body": json.dumps(item)
+                "body": json.dumps(item['value'])
             }
 
         return {
