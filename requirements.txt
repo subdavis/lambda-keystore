@@ -12,7 +12,7 @@ docker==2.7.0
 docker-pycreds==0.2.1
 docutils==0.14
 idna==2.6
-Jinja2==2.10
+Jinja2==2.11.3
 jmespath==0.9.3
 jsondiff==1.1.1
 jsonpickle==0.9.5
